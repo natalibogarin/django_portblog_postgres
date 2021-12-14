@@ -1,0 +1,46 @@
+{% extends "base.html" %}  <!-- Agregando esta linea indicamos que hereda de base.html -->
+{% load static %}
+
+{% block contenido %}
+<!-- Blog section Start -->
+<div class="container-fluid pt-5" id="service">
+    <div class="container">
+        <div class="service-h4 position-relative d-flex align-items-center justify-content-center">
+            <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Blog</h1>
+            <h1 class="position-absolute text-uppercase text-primary">Blog</h1>
+        </div>
+        
+        <div class="row pb-3">
+            {% for post in posts %}
+            <div class="service-box col-lg-4 col-md-6 text-center mb-5">
+                <div class="align-items-center justify-content-center mb-4">
+                    <img src="{{MEDIA_ROOT}}/media/{{post.img}}" alt="" srcset="" width="250"><br>
+                    <h4 class="font-weight-bold m-0"><a href="{% url 'apps.blog:blog_detail' id=post.pk %}">{{ post.title }}</a></h4>
+                </div>
+                <p><div class="date">
+                    <p>Published on: {{ post.published_date|date:"D M Y"}}</p>
+                </div></p>
+                <a class="border-bottom border-primary text-decoration-none" href="{% url 'apps.blog:blog_detail' id=post.pk %}">Leer más</a>
+                <p><a href="{% url 'apps.blog:blog_detail' id=post.pk %}">Comments: {{ post.approve_comments.count }}</a></p>
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+</div>
+<!-- Blog section End -->
+
+
+<div class="centerstage">
+
+
+    {% for post in posts %}
+        <div class="post">
+
+            <h1></h1>
+            
+            
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

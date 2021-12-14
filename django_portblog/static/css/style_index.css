@@ -1,0 +1,39 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: 'Josefin Sans', Helvetica, sans-serif;
+    font-size: 40rem;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.container{
+    display: grid;
+    grid-gap: 20px;
+    height: 100vh;
+
+    
+    
+    align-items: start;
+}
+
+[class^="box-"]{
+    background-color: aqua;
+    /* Alinear todas las cajas en el centro*/
+    display:grid;
+    height: 300px;
+    /*place-items: center;*/
+}
+
+.box-1{
+    grid-column: span 2;
+    grid-row: span 10;
+}
+
+.fsize{
+    font-size: 20px;
+}

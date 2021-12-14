@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+
+        <h1 class='posttitle loader'>{{ post.title }}</h1>
+
+        {% if post.published_date %}
+            <div class="date postdate">
+                {{ post.published_date }}
+            </div>
+
+        {% else %}
+            <a class="btn btn-default" href="{% url 'apps.blog:post_publish' id=post.pk %}">Publish</a>
+        {% endif %}
+
+        <p class='postcontent' >{{ post.content|safe|linebreaksbr }}</p>
+
+        <hr>
+        {% if user.is_authenticated%}
+            <h3>Escribe un comentario</h3>
+            <form method="post" style="margin-top: 1.3em;">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary  btn-lg">Enviar comentario</button>
+            </form>
+        {% else %}
+        <p>Para agregar comentarios debe autenticarse <br>
+             <a href="{% url 'apps.blog_auth:login' %}">Iniciar sesión</a>
+            <a href="{% url 'apps.blog_auth:register' %}">Registrarse</a></p>
+        {% endif %}
+        <div class="container">
+            {% for comment in post.comments.all %}
+            <br>
+                {% if user.is_authenticated or comment.approved_comment %}
+
+                        {{ comment.created_date }}<br>
+                        {{ comment.comment_body }}
+                        {% if not comment.approved_comment %}
+                            <a class="btn btn-default" href="{% url 'apps.blog:comment_remove' id=comment.id %}"><span class="glyphicon glyphicon-remove"></span></a>
+                            <a class="btn btn-default" href="{% url 'apps.blog:comment_approve' id=comment.id %}"><span class="glyphicon glyphicon-ok"></span></a>
+                        {% endif %}
+
+                    <p>{{ comment.text|safe|linebreaks }}</p>
+                    <p>Posted by: <strong>{{ comment.author }}</strong></p>
+
+                {% endif %}
+                {% empty %}
+                <p>No comments posted.</p>
+            {% endfor %}
+        </div>
+{% endblock %}
